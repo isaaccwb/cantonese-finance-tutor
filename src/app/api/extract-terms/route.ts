@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const pdfParse = require("pdf-parse");
-import { anthropic, MODEL } from "@/lib/anthropic";
+import { chatCompletion } from "@/lib/ai";
 import { EXTRACT_TERMS_SYSTEM_PROMPT } from "@/lib/prompts";
 import { extractJsonFromResponse, repairTruncatedJson } from "@/lib/pdf";
 import { saveDocument } from "@/lib/db";
@@ -65,32 +65,17 @@ export async function POST(request: Request) {
       ? `以下係一份PDF文件（${docLabel}）嘅全文內容，共 ${pageCount} 頁。請從入面搵出所有專業金融/技術/統計術語。以JSON格式回覆。`
       : `以下係一段金融相關文字。請從入面搵出所有專業金融/技術/統計術語。以JSON格式回覆。`;
 
-    // Use streaming API — AIX proxy always returns SSE format
-    const stream = anthropic.messages.stream({
-      model: MODEL,
-      max_tokens: 16384,
+    const responseText = await chatCompletion({
       system: EXTRACT_TERMS_SYSTEM_PROMPT,
-      messages: [
-        {
-          role: "user",
-          content: `${sourceDesc}\n\n---\n\n${textToSend}`,
-        },
-      ],
+      userMessage: `${sourceDesc}\n\n---\n\n${textToSend}`,
+      maxTokens: 16384,
     });
-
-    // Collect text manually from stream events
-    let responseText = "";
-    stream.on("text", (chunk) => {
-      responseText += chunk;
-    });
-
-    await stream.finalMessage();
 
     console.log("Response length:", responseText.length);
 
     if (!responseText) {
       return NextResponse.json(
-        { error: "Claude 回傳咗空內容" },
+        { error: "AI 回傳咗空內容" },
         { status: 500 }
       );
     }
@@ -118,7 +103,7 @@ export async function POST(request: Request) {
       errorMsg = error.message;
       if (errorMsg.includes("401") || errorMsg.includes("auth")) {
         errorMsg =
-          "API key 無效或已過期，請檢查 .env.local 入面嘅 ANTHROPIC_API_KEY";
+          "API key 無效或已過期，請檢查 .env.local 入面嘅 API key 設定";
       }
     }
     return NextResponse.json({ error: errorMsg }, { status: 500 });

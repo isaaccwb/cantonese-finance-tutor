@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { anthropic, MODEL } from "@/lib/anthropic";
+import { chatCompletion } from "@/lib/ai";
 import {
   EXPLAIN_TERM_SYSTEM_PROMPT,
   buildExplainTermUserMessage,
@@ -22,29 +22,15 @@ export async function POST(request: Request) {
       );
     }
 
-    const stream = anthropic.messages.stream({
-      model: MODEL,
-      max_tokens: 4096,
+    const responseText = await chatCompletion({
       system: EXPLAIN_TERM_SYSTEM_PROMPT,
-      messages: [
-        {
-          role: "user",
-          content: buildExplainTermUserMessage(term, documentContext),
-        },
-      ],
+      userMessage: buildExplainTermUserMessage(term, documentContext),
+      maxTokens: 4096,
     });
-
-    // Collect text manually from stream events
-    let responseText = "";
-    stream.on("text", (chunk) => {
-      responseText += chunk;
-    });
-
-    await stream.finalMessage();
 
     if (!responseText) {
       return NextResponse.json(
-        { error: "Claude 回傳咗空內容" },
+        { error: "AI 回傳咗空內容" },
         { status: 500 }
       );
     }

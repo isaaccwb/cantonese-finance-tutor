@@ -71,9 +71,9 @@ cd cantonese-finance-tutor
 # Install
 npm install
 
-# 設定 API Key
+# 設定 AI Provider（詳見下方「AI 設定」）
 cp .env.example .env.local
-# 編輯 .env.local，填入你嘅 Anthropic API Key
+# 編輯 .env.local，選擇 provider 並填入 API Key
 
 # Run
 npm run dev
@@ -83,11 +83,47 @@ npm run dev
 
 ---
 
+## 🤖 AI 設定
+
+支援多個 AI provider，揀一個你有嘅就得：
+
+| Provider | 費用 | 效果 | 設定 |
+|----------|------|------|------|
+| **Anthropic (Claude)** | 按量付費 | ⭐⭐⭐ 最好 | `AI_PROVIDER=anthropic` + `ANTHROPIC_API_KEY` |
+| **OpenAI (GPT-4o)** | 按量付費 | ⭐⭐⭐ | `AI_PROVIDER=openai` + `OPENAI_API_KEY` |
+| **Google Gemini** | 有免費額度 | ⭐⭐ | `AI_PROVIDER=gemini` + `GEMINI_API_KEY` |
+| **Groq** | 免費 tier! | ⭐⭐ | `AI_PROVIDER=groq` + `GROQ_API_KEY` |
+| **Ollama (本地)** | 完全免費 | ⭐~⭐⭐ | `AI_PROVIDER=ollama`，無需 key |
+| **自訂 endpoint** | — | — | `AI_PROVIDER=custom` + URL + key |
+
+### 最快開始（免費）
+
+```bash
+# 1. 安裝 Ollama: https://ollama.com
+# 2. 下載模型
+ollama pull llama3.1
+
+# 3. .env.local 設定
+AI_PROVIDER=ollama
+```
+
+### 效果最好
+
+```bash
+# .env.local
+AI_PROVIDER=anthropic
+ANTHROPIC_API_KEY=sk-ant-xxxxx
+```
+
+詳細設定參考 `.env.example` 文件。
+
+---
+
 ## 🛠️ Tech Stack
 
 ```
 Frontend    →  Next.js 16 · React 19 · Tailwind CSS
-AI Engine   →  Claude API (Anthropic)
+AI Engine   →  Multi-provider (Claude / GPT / Gemini / Groq / Ollama)
 Database    →  SQLite (better-sqlite3)
 PDF Parser  →  pdf-parse
 State       →  Zustand
