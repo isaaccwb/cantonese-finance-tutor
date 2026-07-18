@@ -95,4 +95,49 @@ export async function chatCompletion(opts: {
   return response.choices[0]?.message?.content || "";
 }
 
+export async function* chatCompletionStream(opts: {
+  system: string;
+  userMessage: string;
+  maxTokens: number;
+}): AsyncGenerator<string> {
+  if (provider === "anthropic") {
+    const client = getAnthropicClient();
+    const stream = client.messages.stream({
+      model,
+      max_tokens: opts.maxTokens,
+      system: opts.system,
+      messages: [{ role: "user", content: opts.userMessage }],
+    });
+
+    for await (const event of stream) {
+      if (
+        event.type === "content_block_delta" &&
+        event.delta.type === "text_delta"
+      ) {
+        yield event.delta.text;
+      }
+    }
+    return;
+  }
+
+  // OpenAI-compatible streaming
+  const client = getOpenAIClient();
+  const stream = await client.chat.completions.create({
+    model,
+    max_tokens: opts.maxTokens,
+    stream: true,
+    messages: [
+      { role: "system", content: opts.system },
+      { role: "user", content: opts.userMessage },
+    ],
+  });
+
+  for await (const chunk of stream) {
+    const text = chunk.choices[0]?.delta?.content;
+    if (text) {
+      yield text;
+    }
+  }
+}
+
 export { provider, model };

@@ -35,6 +35,7 @@ export interface TermExplanation {
 export interface TermWithExplanation extends ExtractedTerm {
   explanation?: TermExplanation;
   explanationLoading?: boolean;
+  streamingText?: string;
 }
 
 export interface ExtractTermsResponse {

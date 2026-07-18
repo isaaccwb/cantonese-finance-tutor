@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import { Badge } from "@/components/ui/Badge";
-import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import { ExplanationSection } from "./ExplanationSection";
 import { useTermsStore } from "@/store/termsStore";
 import { useExplainTerm } from "@/hooks/useTerms";
@@ -25,7 +24,7 @@ export function TermDetail({ termId }: { termId: string }) {
     );
   }
 
-  const { explanation, explanationLoading } = term;
+  const { explanation, explanationLoading, streamingText } = term;
 
   return (
     <div className="mx-auto max-w-3xl">
@@ -46,10 +45,26 @@ export function TermDetail({ termId }: { termId: string }) {
         </p>
       </div>
 
-      {/* Loading */}
-      {explanationLoading && (
+      {/* Streaming view */}
+      {explanationLoading && streamingText !== undefined && (
+        <div className="rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-700 dark:bg-gray-900">
+          <div className="mb-3 flex items-center gap-2">
+            <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-amber-500" />
+            <span className="text-xs text-gray-500 dark:text-gray-400">AI 老師講緊...</span>
+          </div>
+          <div className="min-h-[4rem] overflow-hidden">
+            <p className="whitespace-pre-wrap text-sm leading-relaxed text-gray-700 dark:text-gray-300">
+              {streamingText}
+              <span className="inline-block w-0.5 h-4 ml-0.5 align-middle animate-pulse bg-amber-500" />
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Loading without stream (fallback) */}
+      {explanationLoading && streamingText === undefined && (
         <div className="flex flex-col items-center gap-3 py-12">
-          <LoadingSpinner size="lg" />
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-amber-500 border-t-transparent" />
           <p className="text-sm text-gray-500 dark:text-gray-400">AI 老師準備緊解釋...</p>
         </div>
       )}

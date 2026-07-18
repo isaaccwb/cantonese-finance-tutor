@@ -18,6 +18,8 @@ interface TermsState {
   loadFromDb: (documentId: string) => Promise<void>;
   setExplanation: (termId: string, explanation: TermExplanation) => void;
   setExplanationLoading: (termId: string, loading: boolean) => void;
+  setStreamingText: (termId: string, text: string) => void;
+  clearStreamingText: (termId: string) => void;
   setSearchQuery: (query: string) => void;
   setActiveCategory: (category: TermCategory | "全部") => void;
   reset: () => void;
@@ -70,6 +72,20 @@ export const useTermsStore = create<TermsState>((set, get) => ({
     set((state) => ({
       terms: state.terms.map((t) =>
         t.id === termId ? { ...t, explanationLoading: loading } : t
+      ),
+    })),
+
+  setStreamingText: (termId, text) =>
+    set((state) => ({
+      terms: state.terms.map((t) =>
+        t.id === termId ? { ...t, streamingText: text } : t
+      ),
+    })),
+
+  clearStreamingText: (termId) =>
+    set((state) => ({
+      terms: state.terms.map((t) =>
+        t.id === termId ? { ...t, streamingText: undefined } : t
       ),
     })),
 

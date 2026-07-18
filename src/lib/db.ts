@@ -16,6 +16,7 @@ function getDb(): Database.Database {
     _db = new Database(DB_PATH);
     _db.pragma("journal_mode = WAL");
     _db.pragma("foreign_keys = ON");
+    _db.pragma("wal_checkpoint(TRUNCATE)");
     initSchema(_db);
   }
   return _db;
@@ -117,6 +118,16 @@ export function saveDocument(
         term.category,
         term.contextSnippet || null,
         term.pageNumber || null
+      );
+    }
+
+    // Verify terms were saved
+    const count = db
+      .prepare("SELECT count(*) as c FROM terms WHERE documentId = ?")
+      .get(id) as { c: number };
+    if (count.c !== data.terms.length) {
+      throw new Error(
+        `Terms 儲存失敗: 預期 ${data.terms.length}，實際 ${count.c}`
       );
     }
   });
