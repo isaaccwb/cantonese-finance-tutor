@@ -53,12 +53,12 @@ export function PdfUploader() {
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onClick={() => !isProcessing && fileInputRef.current?.click()}
-        className={`cursor-pointer rounded-2xl border-2 border-dashed p-12 text-center transition-all ${
+        className={`cursor-pointer rounded-2xl border-2 border-dashed p-6 text-center transition-all sm:p-12 ${
           isDragOver
-            ? "border-amber-500 bg-amber-50"
+            ? "border-amber-500 bg-amber-50 dark:bg-amber-950"
             : isProcessing
-              ? "cursor-wait border-gray-300 bg-gray-50"
-              : "border-gray-300 hover:border-amber-400 hover:bg-amber-50/50"
+              ? "cursor-wait border-gray-300 bg-gray-50 dark:border-gray-600 dark:bg-gray-800"
+              : "border-gray-300 hover:border-amber-400 hover:bg-amber-50/50 dark:border-gray-600 dark:hover:border-amber-500 dark:hover:bg-amber-950/50"
         }`}
       >
         <input
@@ -74,14 +74,14 @@ export function PdfUploader() {
           <div className="flex flex-col items-center gap-4">
             <LoadingSpinner size="lg" />
             <div>
-              <p className="text-lg font-medium text-gray-700">
+              <p className="text-lg font-medium text-gray-700 dark:text-gray-300">
                 {status.stage === "reading" ? "讀取緊檔案..." : "AI 掃描緊術語..."}
               </p>
-              <p className="mt-1 text-sm text-gray-500">
+              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                 {"fileName" in status ? status.fileName : ""}
               </p>
               {status.stage === "extracting" && (
-                <p className="mt-2 text-xs text-gray-400">
+                <p className="mt-2 text-xs text-gray-400 dark:text-gray-500">
                   視乎文件長度，可能需要 10-30 秒
                 </p>
               )}
@@ -91,10 +91,10 @@ export function PdfUploader() {
           <div className="flex flex-col items-center gap-3">
             <div className="text-5xl">📄</div>
             <div>
-              <p className="text-lg font-medium text-gray-700">
+              <p className="text-lg font-medium text-gray-700 dark:text-gray-300">
                 將 PDF 拖入呢度
               </p>
-              <p className="mt-1 text-sm text-gray-500">
+              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                 或者撳呢度揀檔案（最大 25MB）
               </p>
             </div>
@@ -103,11 +103,11 @@ export function PdfUploader() {
       </div>
 
       {status.stage === "error" && (
-        <div className="mt-4 rounded-lg bg-red-50 p-4 text-center">
-          <p className="text-sm text-red-700">{status.message}</p>
+        <div className="mt-4 rounded-lg bg-red-50 p-4 text-center dark:bg-red-950">
+          <p className="text-sm text-red-700 dark:text-red-400">{status.message}</p>
           <button
             onClick={() => setStatus({ stage: "idle" })}
-            className="mt-2 text-sm font-medium text-red-600 underline hover:text-red-700"
+            className="mt-2 text-sm font-medium text-red-600 underline hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
           >
             再試一次
           </button>

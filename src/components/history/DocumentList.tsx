@@ -84,8 +84,8 @@ export function DocumentList() {
     <div>
       {/* Merge bar */}
       {selected.size >= 2 && (
-        <div className="mb-6 flex items-center gap-3 rounded-lg bg-amber-50 p-4">
-          <span className="text-sm text-amber-800">
+        <div className="mb-6 flex flex-wrap items-center gap-3 rounded-lg bg-amber-50 p-4 dark:bg-amber-950">
+          <span className="text-sm text-amber-800 dark:text-amber-300">
             已選 {selected.size} 份文件
           </span>
           <input
@@ -116,13 +116,13 @@ export function DocumentList() {
         {documents.map((doc) => (
           <div
             key={doc.id}
-            className={`rounded-xl border bg-white transition-all ${
+            className={`rounded-xl border bg-white transition-all dark:bg-gray-900 ${
               selected.has(doc.id)
-                ? "border-amber-400 ring-1 ring-amber-200"
-                : "border-gray-200 hover:border-gray-300"
+                ? "border-amber-400 ring-1 ring-amber-200 dark:border-amber-600 dark:ring-amber-800"
+                : "border-gray-200 hover:border-gray-300 dark:border-gray-700 dark:hover:border-gray-600"
             }`}
           >
-            <div className="flex items-center gap-3 p-4">
+            <div className="flex flex-wrap items-center gap-3 p-4 sm:flex-nowrap">
               {/* Checkbox for merge */}
               <input
                 type="checkbox"
@@ -137,10 +137,10 @@ export function DocumentList() {
                 className="flex flex-1 items-center justify-between"
               >
                 <div className="min-w-0 flex-1">
-                  <h3 className="truncate font-medium text-gray-900 hover:text-amber-700">
+                  <h3 className="truncate font-medium text-gray-900 hover:text-amber-700 dark:text-gray-100 dark:hover:text-amber-400">
                     {doc.title}
                   </h3>
-                  <div className="mt-1 flex items-center gap-3 text-xs text-gray-400">
+                  <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-gray-400">
                     <span>{doc.fileName}</span>
                     {doc.pageCount && <span>{doc.pageCount} 頁</span>}
                     <span>{doc.termCount} 個術語</span>

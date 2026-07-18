@@ -100,20 +100,20 @@ function TermsPageContent() {
         <div className="mb-2 flex items-center gap-2">
           <Link
             href="/"
-            className="text-sm text-gray-400 hover:text-gray-600"
+            className="text-sm text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
           >
             首頁
           </Link>
-          <span className="text-gray-300">/</span>
-          <span className="text-sm text-gray-600">術語列表</span>
+          <span className="text-gray-300 dark:text-gray-600">/</span>
+          <span className="text-sm text-gray-600 dark:text-gray-400">術語列表</span>
         </div>
-        <h1 className="text-2xl font-bold text-gray-900">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
           {documentTitle || "術語列表"}
         </h1>
         {documentSummary && (
-          <p className="mt-2 text-sm text-gray-500">{documentSummary}</p>
+          <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">{documentSummary}</p>
         )}
-        <p className="mt-1 text-xs text-gray-400">
+        <p className="mt-1 text-xs text-gray-400 dark:text-gray-500">
           共搵到 {terms.length} 個專業術語
         </p>
       </div>

@@ -65,7 +65,7 @@ export function DocumentActions({
             if (e.key === "Enter") handleRename();
             if (e.key === "Escape") setRenaming(false);
           }}
-          className="w-48 rounded border border-gray-300 px-2 py-1 text-sm focus:border-amber-500 focus:outline-none"
+          className="w-48 rounded border border-gray-300 bg-white px-2 py-1 text-sm focus:border-amber-500 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100"
           autoFocus
           disabled={loading}
         />
@@ -90,26 +90,26 @@ export function DocumentActions({
     <div className="flex items-center gap-2" onClick={(e) => e.preventDefault()}>
       <button
         onClick={() => setRenaming(true)}
-        className="rounded px-2 py-1 text-xs text-gray-500 hover:bg-gray-100"
+        className="rounded px-2 py-1 text-xs text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
       >
         改名
       </button>
       <button
         onClick={() => handleExport("csv")}
-        className="rounded px-2 py-1 text-xs text-gray-500 hover:bg-gray-100"
+        className="rounded px-2 py-1 text-xs text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
       >
         CSV
       </button>
       <button
         onClick={() => handleExport("json")}
-        className="rounded px-2 py-1 text-xs text-gray-500 hover:bg-gray-100"
+        className="rounded px-2 py-1 text-xs text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
       >
         JSON
       </button>
       <button
         onClick={handleDelete}
         disabled={loading}
-        className="rounded px-2 py-1 text-xs text-red-500 hover:bg-red-50"
+        className="rounded px-2 py-1 text-xs text-red-500 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-950"
       >
         刪除
       </button>

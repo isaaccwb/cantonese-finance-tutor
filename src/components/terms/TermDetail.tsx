@@ -39,9 +39,9 @@ export function TermDetail({ termId }: { termId: string }) {
             </span>
           )}
         </div>
-        <h1 className="text-3xl font-bold text-gray-900">{term.termEn}</h1>
-        <p className="mt-1 text-xl text-gray-600">{term.termZh}</p>
-        <p className="mt-3 rounded-lg bg-gray-50 p-3 text-sm text-gray-500 italic">
+        <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl dark:text-gray-100">{term.termEn}</h1>
+        <p className="mt-1 text-xl text-gray-600 dark:text-gray-400">{term.termZh}</p>
+        <p className="mt-3 rounded-lg bg-gray-50 p-3 text-sm text-gray-500 italic dark:bg-gray-800 dark:text-gray-400">
           「{term.contextSnippet}」
         </p>
       </div>
@@ -50,7 +50,7 @@ export function TermDetail({ termId }: { termId: string }) {
       {explanationLoading && (
         <div className="flex flex-col items-center gap-3 py-12">
           <LoadingSpinner size="lg" />
-          <p className="text-sm text-gray-500">AI 老師準備緊解釋...</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">AI 老師準備緊解釋...</p>
         </div>
       )}
 
@@ -76,34 +76,34 @@ export function TermDetail({ termId }: { termId: string }) {
           />
 
           {/* Conclusion Chain */}
-          <div className="rounded-xl border border-gray-200 bg-white p-5">
-            <h3 className="mb-4 flex items-center gap-2 text-sm font-semibold text-gray-700">
+          <div className="rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-700 dark:bg-gray-900">
+            <h3 className="mb-4 flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
               <span>🔗</span> 結論鏈
             </h3>
             <div className="flex flex-col gap-3">
-              <div className="rounded-lg bg-gray-50 p-3">
-                <p className="mb-1 text-xs font-medium text-gray-500">
+              <div className="rounded-lg bg-gray-50 p-3 dark:bg-gray-800">
+                <p className="mb-1 text-xs font-medium text-gray-500 dark:text-gray-400">
                   結論句
                 </p>
-                <p className="text-sm text-gray-800">
+                <p className="text-sm text-gray-800 dark:text-gray-200">
                   {explanation.conclusionChain.conclusion}
                 </p>
               </div>
-              <div className="flex justify-center text-gray-300">↓</div>
-              <div className="rounded-lg bg-gray-50 p-3">
-                <p className="mb-1 text-xs font-medium text-gray-500">
+              <div className="flex justify-center text-gray-300 dark:text-gray-600">↓</div>
+              <div className="rounded-lg bg-gray-50 p-3 dark:bg-gray-800">
+                <p className="mb-1 text-xs font-medium text-gray-500 dark:text-gray-400">
                   證據句
                 </p>
-                <p className="text-sm text-gray-800">
+                <p className="text-sm text-gray-800 dark:text-gray-200">
                   {explanation.conclusionChain.evidence}
                 </p>
               </div>
-              <div className="flex justify-center text-gray-300">↓</div>
-              <div className="rounded-lg bg-amber-50 p-3">
-                <p className="mb-1 text-xs font-medium text-amber-600">
+              <div className="flex justify-center text-gray-300 dark:text-gray-600">↓</div>
+              <div className="rounded-lg bg-amber-50 p-3 dark:bg-amber-950">
+                <p className="mb-1 text-xs font-medium text-amber-600 dark:text-amber-400">
                   翻譯句
                 </p>
-                <p className="text-sm text-gray-800">
+                <p className="text-sm text-gray-800 dark:text-gray-200">
                   {explanation.conclusionChain.translation}
                 </p>
               </div>

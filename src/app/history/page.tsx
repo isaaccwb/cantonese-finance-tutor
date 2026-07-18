@@ -11,15 +11,15 @@ export default function HistoryPage() {
           <div className="mb-2 flex items-center gap-2">
             <Link
               href="/"
-              className="text-sm text-gray-400 hover:text-gray-600"
+              className="text-sm text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
             >
               首頁
             </Link>
-            <span className="text-gray-300">/</span>
-            <span className="text-sm text-gray-600">歷史記錄</span>
+            <span className="text-gray-300 dark:text-gray-600">/</span>
+            <span className="text-sm text-gray-600 dark:text-gray-400">歷史記錄</span>
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">歷史記錄</h1>
-          <p className="mt-1 text-sm text-gray-500">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">歷史記錄</h1>
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
             管理之前上載過嘅 PDF 同術語結果
           </p>
         </div>
